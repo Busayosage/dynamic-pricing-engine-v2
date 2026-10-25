@@ -1,0 +1,9 @@
+# Step 4D challenger dependencies (optional extras; Python 3.11, Windows x64). Approved 2026-10-21.
+# Verified with `pip install --dry-run -c requirements.txt`: no core pin in requirements.txt is changed.
+# Install: .venv\Scripts\python.exe -m pip install -r requirements-challenger.txt -c requirements.txt
+xgboost==3.2.0
+catboost==1.2.10
+# Transitive dependencies of catboost 1.2.10 not already in requirements.txt:
+graphviz==0.21
+plotly==7.1.0
+narwhals==2.27.1

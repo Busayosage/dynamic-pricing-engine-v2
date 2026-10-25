@@ -1,0 +1,49 @@
+Product_ID,Product_Name,Product_Category,Shelf_Life_Days,Supplier_ID
+1000,Whole Wheat Bread 800g,Bakery,4,4
+1001,White Sandwich Loaf,Bakery,2,8
+1002,Croissant 4-pack,Bakery,2,5
+1003,Blueberry Muffins 6-pack,Bakery,4,10
+1004,Chocolate Chip Cookies,Bakery,4,7
+1005,Bagels 6-pack,Bakery,4,8
+1006,Cinnamon Rolls 4-pack,Bakery,2,4
+1007,French Baguette,Bakery,5,8
+1008,Scones 4-pack,Bakery,4,6
+1009,Banana Bread Loaf,Bakery,2,2
+1010,Artisan Sourdough,Bakery,5,6
+1011,Donuts 8-pack,Bakery,3,5
+1012,Chicken Breast Fillets 500g,Meat,3,10
+1013,Ground Beef 450g,Meat,7,9
+1014,Pork Sausages 8-pack,Meat,3,10
+1015,Salmon Fillets 300g,Meat,6,3
+1016,Bacon Rashers 300g,Meat,6,7
+1017,Turkey Breast Slices 400g,Meat,6,9
+1018,Lamb Chops 450g,Meat,5,5
+1019,Beef Mince 500g,Meat,5,7
+1020,Chicken Thighs 600g,Meat,7,9
+1021,Pork Chops 4-pack,Meat,4,4
+1022,Duck Breast 350g,Meat,3,2
+1023,Ham Joint 1kg,Meat,4,9
+1024,Whole Milk 4-pint,Dairy,16,5
+1025,Semi-Skimmed Milk 4-pint,Dairy,8,4
+1026,Greek Yogurt 500g,Dairy,18,7
+1027,Cheddar Cheese 400g,Dairy,18,8
+1028,Butter 250g,Dairy,21,3
+1029,Free Range Eggs 12-pack,Dairy,20,1
+1030,Cottage Cheese 300g,Dairy,10,2
+1031,Mozzarella 250g,Dairy,14,4
+1032,Cream Cheese 200g,Dairy,8,6
+1033,Single Cream 300ml,Dairy,12,10
+1034,Yogurt Drinks 6-pack,Dairy,10,6
+1035,Sour Cream 200ml,Dairy,19,2
+1036,Orange Juice 1L,Beverages,247,2
+1037,Apple Juice 1L,Beverages,231,4
+1038,Cola 2L,Beverages,299,8
+1039,Mineral Water 6-pack,Beverages,244,9
+1040,Energy Drink 500ml,Beverages,219,8
+1041,Iced Tea 1L,Beverages,242,2
+1042,Coffee Beans 250g,Beverages,82,8
+1043,English Breakfast Tea 80bags,Beverages,246,9
+1044,Sparkling Water 1L,Beverages,186,1
+1045,Lemonade 2L,Beverages,356,9
+1046,Protein Shake 4-pack,Beverages,158,8
+1047,Green Tea 40bags,Beverages,92,3

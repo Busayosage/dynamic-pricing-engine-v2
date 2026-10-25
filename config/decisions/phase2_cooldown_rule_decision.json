@@ -1,0 +1,73 @@
+{
+  "decision_id": "DEC-PH2-COOLDOWN-2026-10-24-v1",
+  "recorded_at": "2026-10-24",
+  "decided_by": "Project owner (via chat instruction, 2026-10-24)",
+  "subject": "Preferred research cooldown rule for the Phase 2 dynamic pricing simulation",
+  "status": "PREFERRED_RESEARCH_RULE_NOT_PRODUCTION_APPROVED",
+  "preferred_rule": {
+    "id": "A1",
+    "description": "7 complete days must elapse after the previous simulated markdown window ends before a new markdown may start",
+    "assumption_set": "AS-2026-10-23-v8 (DRAFT)",
+    "simulator_version": "1.4",
+    "evaluation_policy": "EP-PH2-A1-2026-10-24-v1",
+    "run": "20261024-002535_dynamic_pricing_evaluation_a1",
+    "run_manifest_sha256": "2151715b924d69a6f1a14b1cfcae3457976b3a5f98dd3812701e57a2a463657f"
+  },
+  "retained_comparison": {
+    "id": "ORIGINAL",
+    "description": "Original Phase 2 rule: 7-day cooldown counted between weekly decisions (never binds at weekly cadence)",
+    "assumption_set": "AS-2026-10-23-v7 (DRAFT)",
+    "simulator_version": "1.3",
+    "evaluation_policy": "EP-PH2-2026-10-23-v1",
+    "run": "20261023-233225_dynamic_pricing_evaluation",
+    "run_manifest_sha256": "6b3cf94b9bbbaa8a8fd178a6515cb06c979fd0dd161dda34ed1424c7a50586b3",
+    "reproducibility": "re-run inside the A1 evaluation and reproduced exactly in all 16 scenario x response runs"
+  },
+  "rationale": "A1 meets the pre-frozen preference criteria (PA-PE), reduces downside losses under weak or no customer response, and reduces mandatory review workload. The reduced upside under stronger response is acknowledged and accepted for this research preference.",
+  "evidence": {
+    "SC3_gross_profit_change_original_to_a1": {
+      "R0_NO_RESPONSE": [
+        -45988.5,
+        -43568.7
+      ],
+      "R1_LOW": [
+        -9389.0,
+        -8909.5
+      ],
+      "R2_CENTRAL": [
+        12630.7,
+        11868.4
+      ],
+      "R3_HIGH": [
+        62062.4,
+        58534.0
+      ]
+    },
+    "SC3_markdowns": [
+      205,
+      190
+    ],
+    "SC3_mandatory_reviews": [
+      150,
+      134
+    ],
+    "SC1_SC2_SF75": "identical under both rules",
+    "central_benefit_retained": {
+      "gross_profit": 0.941,
+      "expired_units_avoided": 0.969
+    }
+  },
+  "limitations": [
+    "Synthetic data, assumed customer response, proxy prices and assumed costs",
+    "Only SC3 differs between rules (74 lines)",
+    "Exploratory: original results were seen before the A1 policy was frozen",
+    "Not commercial proof"
+  ],
+  "not_approved": [
+    "production use",
+    "any live price change",
+    "any order",
+    "any markdown proposal or approval"
+  ],
+  "unchanged": "Pricing algorithms, evaluation thresholds, assumption sets v1-v8 and every protected output"
+}

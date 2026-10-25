@@ -1,0 +1,84 @@
+{
+  "evaluation_policy_id": "EP-PH2-2026-10-23-v1",
+  "status": "FROZEN_BEFORE_COMPARISON",
+  "frozen_at": "2026-10-23",
+  "purpose": "Research evaluation of the Phase 2 dynamic pricing simulation against an otherwise identical no-pricing baseline. SIMULATED RESEARCH - NOT VALIDATED FOR LIVE USE. Passing these criteria is not commercial proof.",
+  "source": {
+    "document": "docs/PHASE_2_DYNAMIC_PRICING_DESIGN.md",
+    "document_sha256": "a5178a5a4838b7e7001324ec948908b6ce89b5c939f0736249c82a2f4d764e42",
+    "approval": "Design approved by the project owner on 2026-10-23 with conditions (7-day cooldown, max 2 events per 28 days, orders first, markdown only, four true responses, one new run directory)",
+    "preliminary_exposure": "Before freezing, only the pricing-off equivalence check and a no-markdown shadow run (eligibility check) were executed for SC1; no pricing outcome had been simulated. Phase 1 single-line rankings for SC1/SC3 had been seen."
+  },
+  "scope": {
+    "replay_assumption_set": {
+      "assumption_set_id": "AS-2026-10-23-v2",
+      "content_sha256": "ddc95ec125bb715ba63de9c2fe90de7319eb6cc38470c327c2585eb916cf989f",
+      "role": "replay values, identical to the protected comparison"
+    },
+    "pricing_assumption_set": {
+      "assumption_set_id": "AS-2026-10-23-v7",
+      "content_sha256": "9f3d33db855d6ce0bec2d38a84dafa7080b02f2eeb5ba37ec32186774a38f0fc",
+      "role": "pricing belief, guards and conventions"
+    },
+    "protected_baseline_run": "20261023-131711_policy_comparison",
+    "ordering_policy": "P2",
+    "market_scenarios": [
+      "SC1",
+      "SC2",
+      "SC3",
+      "SF75"
+    ],
+    "adoption_scenarios": [
+      "SC1",
+      "SC2",
+      "SC3"
+    ],
+    "true_responses": [
+      "R0_NO_RESPONSE",
+      "R1_LOW",
+      "R2_CENTRAL",
+      "R3_HIGH"
+    ],
+    "series": "all 720",
+    "simulator_version": "1.3"
+  },
+  "prerequisites_per_scenario": {
+    "E1": "Pricing off reproduces the protected P2 decisions, deliveries and weekly outputs exactly (CSV round trip)",
+    "E2": "Pricing on with fixed orders and no markdown possible reproduces the pricing-off decisions, deliveries, daily and weekly outputs exactly",
+    "E3": "In-loop eligibility, blockers, waste class, batch dates, investigate-by day and at-risk units equal the saved Markdown review for every decision"
+  },
+  "hard_gates_every_priced_run": {
+    "G1": "Unit conservation holds on every simulated day (replay.check_conservation)",
+    "G2": "Ordering unchanged: decisions and deliveries identical to the pricing-off pass",
+    "G3": "Markdown only and price bounds: price never above the reference price; markdowns are permitted steps, at most the maximum markdown, and keep the margin floor",
+    "G4": "Every selected markdown was eligible at its decision; at least 7 days between selections per line; at most 2 selections in any rolling 28 days; no overlapping windows; windows start on or after the decision day",
+    "G5": "Chronology: no demand read before its decision; markdown days only inside selected windows",
+    "G6": "Labels: every pricing record SIMULATED / HYPOTHETICAL_UNAPPROVED / NOT_EXECUTED with no approval or proposal id; every selection SIMULATED_AS_IF_APPROVED and PENDING_HUMAN_REVIEW",
+    "G7": "Belief and truth separated: under the no-response truth the daily demand equals the baseline demand on every day"
+  },
+  "measures": {
+    "delta": "priced minus baseline, summed over all series and simulated days of the scenario",
+    "gross_profit": "revenue at the price in force - assumed cost of units received - disposal cost (v6 disposal 0%); costs are identical in paired runs",
+    "baseline_expired_cost": "baseline expired units x assumed unit cost (reference price x (1 - assumed margin))",
+    "benefits": [
+      "gross-profit increase",
+      "fewer expired units"
+    ],
+    "harms": [
+      "gross-profit decrease",
+      "more illustrative unmet units",
+      "markdown events and mandatory reviews created",
+      "lines whose gross profit fell"
+    ]
+  },
+  "thresholds_per_adoption_scenario": {
+    "T1_R2_CENTRAL": "expired units fall (delta < 0) and gross profit does not fall (delta >= 0)",
+    "T2_R3_HIGH": "gross profit does not fall (delta >= 0)",
+    "T3_R1_LOW": "gross-profit loss at most 10% of the baseline expired cost (delta >= -0.10 x baseline_expired_cost)",
+    "T4_R0_NO_RESPONSE": "gross-profit loss at most 25% of the baseline expired cost (delta >= -0.25 x baseline_expired_cost)",
+    "T5_ALL_TRUE_RESPONSES": "illustrative unmet units rise by at most 0.5% of baseline sold units",
+    "not_applicable": "A threshold is NOT_APPLICABLE (neither pass nor fail) when no markdown was selected for that scenario and true response"
+  },
+  "outcome_rule": "MEETS_PREREGISTERED_RESEARCH_CRITERIA only if every prerequisite and hard gate passes in every scenario and every applicable threshold passes in SC1, SC2 and SC3; otherwise DOES_NOT_MEET_PREREGISTERED_RESEARCH_CRITERIA. SF75 is reported, not used. Either outcome is a research result only.",
+  "reporting": "Benefits and harms are reported separately for every scenario and true response, including no response. Thresholds and policies are not changed after results are seen."
+}

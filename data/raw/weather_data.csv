@@ -1,0 +1,365 @@
+Week_Number,Region,Avg_Temperature,Rainfall,Holiday_Flag
+2024-W01,Midlands,7.4,32.1,0
+2024-W01,South East,10.5,15.7,0
+2024-W01,North West,6.8,28.5,1
+2024-W01,London,9.9,23.0,1
+2024-W01,South West,10.0,45.9,1
+2024-W01,North East,6.4,32.4,0
+2024-W01,Wales,8.3,50.6,1
+2024-W02,Midlands,8.9,29.4,0
+2024-W02,South East,12.0,21.2,0
+2024-W02,North West,5.4,29.3,0
+2024-W02,London,8.8,30.2,0
+2024-W02,South West,8.4,32.9,0
+2024-W02,North East,7.3,38.7,0
+2024-W02,Wales,7.9,27.5,0
+2024-W03,Midlands,6.2,23.3,0
+2024-W03,South East,5.6,21.4,0
+2024-W03,North West,6.3,37.9,0
+2024-W03,London,7.8,19.6,0
+2024-W03,South West,7.8,29.3,0
+2024-W03,North East,6.9,47.8,0
+2024-W03,Wales,5.2,29.2,0
+2024-W04,Midlands,6.5,25.9,0
+2024-W04,South East,7.3,19.2,0
+2024-W04,North West,7.3,29.0,0
+2024-W04,London,8.4,16.5,0
+2024-W04,South West,4.8,33.7,0
+2024-W04,North East,4.8,34.3,0
+2024-W04,Wales,2.9,30.5,0
+2024-W05,Midlands,6.7,28.4,0
+2024-W05,South East,10.6,20.7,0
+2024-W05,North West,1.8,32.1,0
+2024-W05,London,7.9,16.4,0
+2024-W05,South West,4.5,25.2,0
+2024-W05,North East,0.5,29.4,0
+2024-W05,Wales,3.2,50.5,0
+2024-W06,Midlands,3.2,20.5,0
+2024-W06,South East,6.3,17.9,0
+2024-W06,North West,2.7,24.5,0
+2024-W06,London,5.1,24.4,0
+2024-W06,South West,3.4,32.0,0
+2024-W06,North East,2.4,30.3,0
+2024-W06,Wales,4.3,33.3,0
+2024-W07,Midlands,2.2,34.4,0
+2024-W07,South East,4.4,23.8,0
+2024-W07,North West,3.5,23.9,0
+2024-W07,London,4.7,28.0,0
+2024-W07,South West,6.3,27.7,0
+2024-W07,North East,5.0,26.7,0
+2024-W07,Wales,1.6,25.3,0
+2024-W08,Midlands,2.3,23.0,0
+2024-W08,South East,7.1,18.0,0
+2024-W08,North West,2.2,41.0,0
+2024-W08,London,5.2,26.7,0
+2024-W08,South West,2.7,45.3,0
+2024-W08,North East,2.0,27.5,0
+2024-W08,Wales,2.4,30.7,0
+2024-W09,Midlands,2.5,22.9,0
+2024-W09,South East,5.0,23.9,0
+2024-W09,North West,5.1,30.4,0
+2024-W09,London,4.4,27.8,0
+2024-W09,South West,4.9,41.2,0
+2024-W09,North East,3.2,35.2,0
+2024-W09,Wales,0.9,38.1,0
+2024-W10,Midlands,3.2,33.9,0
+2024-W10,South East,1.8,23.8,0
+2024-W10,North West,0.7,26.3,0
+2024-W10,London,1.7,30.4,0
+2024-W10,South West,5.4,23.4,0
+2024-W10,North East,1.0,22.6,0
+2024-W10,Wales,2.8,35.0,0
+2024-W11,Midlands,2.9,25.6,0
+2024-W11,South East,5.7,14.7,0
+2024-W11,North West,0.3,36.9,0
+2024-W11,London,5.3,24.6,0
+2024-W11,South West,3.9,22.8,0
+2024-W11,North East,-0.2,23.9,0
+2024-W11,Wales,-2.0,35.8,0
+2024-W12,Midlands,2.6,25.3,0
+2024-W12,South East,1.0,12.6,0
+2024-W12,North West,1.4,28.6,0
+2024-W12,London,3.0,24.7,0
+2024-W12,South West,5.3,31.3,0
+2024-W12,North East,1.9,34.9,0
+2024-W12,Wales,1.2,48.0,0
+2024-W13,Midlands,3.3,10.8,1
+2024-W13,South East,3.7,7.0,1
+2024-W13,North West,1.4,14.1,1
+2024-W13,London,3.3,16.9,1
+2024-W13,South West,1.3,10.0,0
+2024-W13,North East,2.7,10.1,1
+2024-W13,Wales,2.3,19.1,0
+2024-W14,Midlands,1.2,8.2,0
+2024-W14,South East,-0.8,12.2,0
+2024-W14,North West,1.1,16.2,0
+2024-W14,London,3.3,10.9,0
+2024-W14,South West,1.5,10.5,0
+2024-W14,North East,2.8,13.2,0
+2024-W14,Wales,0.7,13.1,0
+2024-W15,Midlands,1.5,8.9,0
+2024-W15,South East,2.4,7.2,0
+2024-W15,North West,0.1,23.5,0
+2024-W15,London,1.5,9.9,0
+2024-W15,South West,3.7,12.9,0
+2024-W15,North East,2.3,19.7,0
+2024-W15,Wales,1.1,14.0,0
+2024-W16,Midlands,4.7,9.8,0
+2024-W16,South East,3.7,9.5,0
+2024-W16,North West,0.8,15.9,0
+2024-W16,London,4.3,12.9,0
+2024-W16,South West,4.2,10.7,0
+2024-W16,North East,0.0,11.5,0
+2024-W16,Wales,1.0,15.0,0
+2024-W17,Midlands,2.1,23.1,1
+2024-W17,South East,5.6,10.3,1
+2024-W17,North West,2.0,15.6,1
+2024-W17,London,4.8,9.3,1
+2024-W17,South West,3.0,14.2,1
+2024-W17,North East,1.1,19.8,1
+2024-W17,Wales,0.1,21.7,1
+2024-W18,Midlands,4.1,8.3,0
+2024-W18,South East,1.8,13.5,0
+2024-W18,North West,3.3,12.3,0
+2024-W18,London,5.0,13.5,0
+2024-W18,South West,1.9,14.1,0
+2024-W18,North East,-0.0,10.8,0
+2024-W18,Wales,5.4,30.9,0
+2024-W19,Midlands,2.2,9.1,0
+2024-W19,South East,8.0,8.7,0
+2024-W19,North West,2.4,12.1,0
+2024-W19,London,5.8,10.3,0
+2024-W19,South West,4.5,12.6,0
+2024-W19,North East,5.2,14.4,0
+2024-W19,Wales,4.8,17.8,0
+2024-W20,Midlands,2.9,8.6,0
+2024-W20,South East,4.5,10.4,0
+2024-W20,North West,1.4,15.5,0
+2024-W20,London,2.9,9.4,0
+2024-W20,South West,9.1,11.0,0
+2024-W20,North East,6.3,19.6,0
+2024-W20,Wales,1.9,12.8,0
+2024-W21,Midlands,3.3,13.1,1
+2024-W21,South East,5.5,7.2,1
+2024-W21,North West,4.7,18.6,0
+2024-W21,London,6.9,11.4,1
+2024-W21,South West,6.4,20.2,1
+2024-W21,North East,2.6,15.9,1
+2024-W21,Wales,6.4,19.2,1
+2024-W22,Midlands,6.0,12.7,0
+2024-W22,South East,6.2,6.6,0
+2024-W22,North West,3.2,15.6,0
+2024-W22,London,11.4,9.0,0
+2024-W22,South West,5.9,18.6,0
+2024-W22,North East,5.8,13.0,0
+2024-W22,Wales,6.6,18.9,0
+2024-W23,Midlands,6.5,12.7,0
+2024-W23,South East,9.3,9.6,0
+2024-W23,North West,8.7,18.1,0
+2024-W23,London,9.5,10.9,0
+2024-W23,South West,4.2,18.6,0
+2024-W23,North East,3.8,10.4,0
+2024-W23,Wales,3.2,23.2,0
+2024-W24,Midlands,9.5,15.0,0
+2024-W24,South East,9.1,11.9,0
+2024-W24,North West,8.3,19.1,0
+2024-W24,London,9.1,9.3,0
+2024-W24,South West,11.0,12.4,0
+2024-W24,North East,3.2,16.1,0
+2024-W24,Wales,7.7,32.0,0
+2024-W25,Midlands,5.2,10.4,0
+2024-W25,South East,10.1,8.8,0
+2024-W25,North West,9.1,22.4,0
+2024-W25,London,10.4,11.0,0
+2024-W25,South West,7.0,11.0,0
+2024-W25,North East,7.1,12.4,0
+2024-W25,Wales,7.2,16.6,0
+2024-W26,Midlands,11.8,13.4,0
+2024-W26,South East,10.1,8.2,0
+2024-W26,North West,8.3,18.8,0
+2024-W26,London,12.3,8.0,0
+2024-W26,South West,9.3,14.7,0
+2024-W26,North East,7.1,14.4,0
+2024-W26,Wales,7.2,14.4,0
+2024-W27,Midlands,11.1,12.7,0
+2024-W27,South East,9.7,7.8,0
+2024-W27,North West,11.3,15.0,0
+2024-W27,London,10.2,19.2,0
+2024-W27,South West,9.0,9.8,0
+2024-W27,North East,9.7,11.5,0
+2024-W27,Wales,8.0,14.1,0
+2024-W28,Midlands,13.6,8.8,0
+2024-W28,South East,15.1,6.9,0
+2024-W28,North West,12.0,29.1,0
+2024-W28,London,16.3,15.6,0
+2024-W28,South West,12.4,11.1,0
+2024-W28,North East,10.1,15.4,0
+2024-W28,Wales,11.0,21.8,0
+2024-W29,Midlands,9.6,11.4,0
+2024-W29,South East,11.7,11.1,0
+2024-W29,North West,9.0,23.4,0
+2024-W29,London,15.0,10.2,0
+2024-W29,South West,13.4,11.7,0
+2024-W29,North East,9.8,14.4,0
+2024-W29,Wales,11.3,17.2,0
+2024-W30,Midlands,15.0,12.0,0
+2024-W30,South East,15.8,8.2,0
+2024-W30,North West,14.4,13.3,0
+2024-W30,London,16.7,13.0,0
+2024-W30,South West,13.7,13.0,0
+2024-W30,North East,10.8,10.7,0
+2024-W30,Wales,13.0,25.1,0
+2024-W31,Midlands,14.7,8.9,0
+2024-W31,South East,14.8,7.4,0
+2024-W31,North West,13.2,19.6,0
+2024-W31,London,17.8,14.5,0
+2024-W31,South West,15.2,12.1,0
+2024-W31,North East,12.0,12.1,0
+2024-W31,Wales,14.5,13.3,0
+2024-W32,Midlands,13.9,13.5,0
+2024-W32,South East,14.3,12.3,0
+2024-W32,North West,14.7,13.5,0
+2024-W32,London,19.0,10.6,0
+2024-W32,South West,15.5,11.9,0
+2024-W32,North East,15.6,16.4,0
+2024-W32,Wales,17.1,18.0,0
+2024-W33,Midlands,15.8,8.5,0
+2024-W33,South East,16.8,9.7,0
+2024-W33,North West,14.6,13.3,0
+2024-W33,London,20.9,8.4,0
+2024-W33,South West,13.8,10.4,0
+2024-W33,North East,17.9,12.7,0
+2024-W33,Wales,14.5,16.7,0
+2024-W34,Midlands,19.5,15.9,0
+2024-W34,South East,18.6,9.1,0
+2024-W34,North West,15.6,21.1,0
+2024-W34,London,19.6,9.5,0
+2024-W34,South West,17.3,9.2,0
+2024-W34,North East,14.7,11.6,0
+2024-W34,Wales,17.0,22.7,0
+2024-W35,Midlands,16.5,11.2,1
+2024-W35,South East,17.1,7.2,1
+2024-W35,North West,18.2,15.0,1
+2024-W35,London,20.1,14.5,1
+2024-W35,South West,18.1,12.9,1
+2024-W35,North East,18.2,9.8,0
+2024-W35,Wales,17.5,15.3,0
+2024-W36,Midlands,17.4,10.1,0
+2024-W36,South East,17.5,7.0,0
+2024-W36,North West,16.9,10.8,0
+2024-W36,London,19.0,9.9,0
+2024-W36,South West,18.7,15.0,0
+2024-W36,North East,16.7,12.9,0
+2024-W36,Wales,16.6,13.3,0
+2024-W37,Midlands,18.6,12.0,0
+2024-W37,South East,20.2,8.8,0
+2024-W37,North West,15.8,17.2,0
+2024-W37,London,18.5,9.9,0
+2024-W37,South West,17.5,14.1,0
+2024-W37,North East,18.1,27.4,0
+2024-W37,Wales,18.0,16.3,0
+2024-W38,Midlands,15.4,21.1,0
+2024-W38,South East,17.9,8.8,0
+2024-W38,North West,18.6,14.2,0
+2024-W38,London,16.8,11.5,0
+2024-W38,South West,18.1,10.4,0
+2024-W38,North East,15.2,12.9,0
+2024-W38,Wales,17.6,20.0,0
+2024-W39,Midlands,18.1,12.9,0
+2024-W39,South East,22.0,9.4,0
+2024-W39,North West,19.6,12.9,0
+2024-W39,London,18.8,8.2,0
+2024-W39,South West,17.4,13.4,0
+2024-W39,North East,15.6,17.8,0
+2024-W39,Wales,17.4,14.2,0
+2024-W40,Midlands,18.9,22.0,0
+2024-W40,South East,20.2,19.7,0
+2024-W40,North West,16.0,31.8,0
+2024-W40,London,18.1,22.3,0
+2024-W40,South West,18.7,28.3,0
+2024-W40,North East,15.9,24.6,0
+2024-W40,Wales,16.8,32.4,0
+2024-W41,Midlands,18.5,30.9,0
+2024-W41,South East,20.2,18.4,0
+2024-W41,North West,19.6,24.5,0
+2024-W41,London,21.3,21.3,0
+2024-W41,South West,20.0,27.9,0
+2024-W41,North East,14.4,42.3,0
+2024-W41,Wales,17.4,40.4,0
+2024-W42,Midlands,18.3,28.7,0
+2024-W42,South East,18.8,14.7,0
+2024-W42,North West,15.6,42.1,0
+2024-W42,London,20.3,25.6,0
+2024-W42,South West,19.0,52.5,0
+2024-W42,North East,13.5,30.1,0
+2024-W42,Wales,15.2,40.9,0
+2024-W43,Midlands,16.7,25.1,0
+2024-W43,South East,16.1,30.7,0
+2024-W43,North West,18.3,25.3,0
+2024-W43,London,19.1,18.0,0
+2024-W43,South West,19.3,30.6,0
+2024-W43,North East,15.5,49.9,0
+2024-W43,Wales,16.0,48.4,0
+2024-W44,Midlands,17.7,27.5,0
+2024-W44,South East,18.3,19.4,0
+2024-W44,North West,15.7,29.7,0
+2024-W44,London,16.4,29.7,0
+2024-W44,South West,17.2,25.9,0
+2024-W44,North East,16.7,38.6,0
+2024-W44,Wales,16.9,39.4,0
+2024-W45,Midlands,16.2,27.3,0
+2024-W45,South East,18.3,15.5,0
+2024-W45,North West,16.3,34.9,0
+2024-W45,London,18.3,21.8,0
+2024-W45,South West,20.1,48.0,0
+2024-W45,North East,16.2,27.6,0
+2024-W45,Wales,15.5,54.3,0
+2024-W46,Midlands,14.6,24.4,0
+2024-W46,South East,19.6,19.3,0
+2024-W46,North West,11.3,32.5,0
+2024-W46,London,18.4,18.1,0
+2024-W46,South West,17.6,24.0,0
+2024-W46,North East,13.8,28.6,0
+2024-W46,Wales,12.7,33.8,0
+2024-W47,Midlands,15.1,33.9,0
+2024-W47,South East,15.1,25.5,0
+2024-W47,North West,14.7,42.2,0
+2024-W47,London,20.5,23.0,0
+2024-W47,South West,14.5,39.0,0
+2024-W47,North East,13.7,24.2,0
+2024-W47,Wales,11.7,32.8,0
+2024-W48,Midlands,14.7,38.5,1
+2024-W48,South East,12.4,13.4,1
+2024-W48,North West,13.3,32.4,1
+2024-W48,London,13.9,20.3,1
+2024-W48,South West,14.6,36.5,1
+2024-W48,North East,11.8,22.9,0
+2024-W48,Wales,15.5,35.2,1
+2024-W49,Midlands,14.3,21.7,1
+2024-W49,South East,14.5,16.1,1
+2024-W49,North West,9.6,48.1,1
+2024-W49,London,14.6,24.3,0
+2024-W49,South West,15.0,22.3,0
+2024-W49,North East,12.3,32.6,1
+2024-W49,Wales,11.0,58.3,1
+2024-W50,Midlands,11.6,26.4,1
+2024-W50,South East,13.5,22.9,0
+2024-W50,North West,7.8,29.0,1
+2024-W50,London,14.2,21.2,0
+2024-W50,South West,11.5,28.0,1
+2024-W50,North East,10.4,33.9,1
+2024-W50,Wales,12.2,37.9,1
+2024-W51,Midlands,12.1,31.6,0
+2024-W51,South East,14.7,15.3,1
+2024-W51,North West,11.4,31.4,0
+2024-W51,London,12.8,31.2,1
+2024-W51,South West,12.5,34.3,0
+2024-W51,North East,8.9,23.9,1
+2024-W51,Wales,12.2,25.2,1
+2024-W52,Midlands,11.6,8.3,1
+2024-W52,South East,13.7,10.1,1
+2024-W52,North West,7.4,17.2,1
+2024-W52,London,11.6,10.4,1
+2024-W52,South West,8.7,16.2,1
+2024-W52,North East,5.2,19.2,1
+2024-W52,Wales,9.6,12.8,1

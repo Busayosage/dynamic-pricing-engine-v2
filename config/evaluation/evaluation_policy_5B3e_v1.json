@@ -1,0 +1,64 @@
+{
+  "evaluation_policy_id": "EP-5B3E-2026-10-23-v1",
+  "version": 1,
+  "frozen_at": "2026-10-23",
+  "status": "FROZEN_BEFORE_COMPARISON",
+  "source": {
+    "document": "docs/STEP_5B3_IMPLEMENTATION_READINESS.md",
+    "section": "2. Predeclared comparison thresholds",
+    "document_sha256": "12cc2676142f5187bd3ed88a19cd5f63db60c649d6654e73a883e95230d4cd7c",
+    "approved": "Thresholds approved for preregistration with the Step 5B-3 readiness approval (decision D11)",
+    "document_last_modified": "2026-10-23T08:51:25+01:00",
+    "preliminary_exposure": "SC1 aggregate P0 (earlier netting rule) and P2 totals were seen once during the 5B-3c integration timing check at about 2026-10-23T11:03+01:00, after the source document was last modified. No threshold below differs from the source document. The comparison is exploratory rather than fully confirmatory."
+  },
+  "scope": {
+    "policies": ["P0", "P1", "P2"],
+    "adoption_scenarios": ["SC1", "SC2", "SC3"],
+    "stress_scenarios": ["SF75"],
+    "assumption_set": {"assumption_set_id": "AS-2026-10-23-v2", "content_sha256": "ddc95ec125bb715ba63de9c2fe90de7319eb6cc38470c327c2585eb916cf989f", "status": "DRAFT"},
+    "p1_regression_reference": {"assumption_set_id": "AS-2026-10-22-v1", "run": "20261023-081809_replay_simulation_v1_1"}
+  },
+  "hard_gates": {
+    "applies_to": "every policy x scenario (SC1, SC2, SC3, SF75); zero tolerance; any failure blocks the comparison result",
+    "G1_inventory_conservation": [
+      "a: every series-day opening + received = sold + expired + closing",
+      "b: closing equals next opening",
+      "c: no negative values; all stock quantities are integers",
+      "d: weekly totals equal the sum of daily values"
+    ],
+    "G2_delivery_feasibility": [
+      "a: no ORDER drop arrives before day 1 + lead time, or outside its 7-day coverage window and drop schedule",
+      "b: every ORDER drop is a whole number of cases of at least MOQ x case (zero-quantity drops are not scheduled)",
+      "c: no stock is counted after its expiry day: every delivery expires at arrival + remaining life - 1 and the simulator's sell-window assertion never fires; P2 per-day calculator tables are produced by the expiry-aware walk",
+      "d: no quantity is proposed where the arrangement is UNSUPPORTED or the policy's missing-bounds gate applies",
+      "e: every P2 short-life proposal carries SHORT_LIFE_ARRANGEMENT_ASSUMED (P0 and P1 produce no recommendation records; for them the arrangement is recorded as ASSUMED in the assumption set and in delivery_arrangements)",
+      "f: Supply_Capacity is used nowhere (supply_capacity_used = false; the column is not read by the simulator)"
+    ],
+    "G3_operational_safety": [
+      "a: no record has an approved, executed or authorised status, or a non-empty approval_event_id",
+      "b: 100% of Christmas decision points (any horizon, target week 51 or 52) are MANDATORY_ESCALATION",
+      "c: 100% of missing-bound decision points (any horizon) are MANDATORY_REVIEW or MANDATORY_ESCALATION with no proposed quantity under the policy's gate",
+      "d: the leakage, scramble and mutation tests pass, and every run's demand and sales reads happen only after or at their decision",
+      "e: the banned-wording test passes on all outputs",
+      "f: P1 reproduces the protected v1.1 run exactly (SC1-SC3: decisions, deliveries, weekly, daily, review cases)",
+      "g: every protected checksum still verifies"
+    ]
+  },
+  "comparison_thresholds_p2_vs_p1": {
+    "T_U_simulated_unmet_units_illustrative": {"SC1": {"max_ratio_to_P1": 1.00}, "SC2": {"max_ratio_to_P1": 1.02}, "SC3": {"max_ratio_to_P1": 1.02}},
+    "T_E_simulated_expired_units": {"SC1": {"max_ratio_to_P1": 1.05}, "SC2": {"max_ratio_to_P1": 1.05}, "SC3": {"max_ratio_to_P1": 1.05}},
+    "T_O_total_ordered_units": {"SC1": {"max_ratio_to_P1": 1.05}, "SC2": {"max_ratio_to_P1": 1.10}, "SC3": {"max_ratio_to_P1": 1.10}},
+    "T_R_review_workload": {
+      "all": {"max_ratio_to_P1": 1.10, "mandatory_counts_identical": {"MANDATORY_REVIEW": 5040, "MANDATORY_ESCALATION": 2880}},
+      "definition": "decision-point (weekly) cases; P1 = v1.1 queue cases; P2 = v1.2 weekly cases including contract-gate cases; standing supplier-confirmation cases are reported separately and not counted"
+    },
+    "T_S_residual_shortfall_after_order": {
+      "all": {"P2_max": 0, "unless": "each has a named structural cause", "P2_max_vs_P1": "P2 <= P1"},
+      "definition": "P2 = decisions with SHORTAGE_REMAINING_AFTER_ORDER; P1 = decisions with the v1.1 POST_ORDER_SHORTFALL flag (the quantity quoted in the source: 29 in SC1, 111 in SC3 in the v1.1 run)"
+    },
+    "T_X_rounding_excess": {"type": "report_only", "flag_if_category_share_of_ordered_units_above_pct": 10, "definition": "sum over ORDER drops of ordered units minus need before rounding"}
+  },
+  "outcome_rule": "P2 is recommended as the research replay default only if G1-G3 pass for every policy and scenario and every T_U, T_E, T_O, T_R and T_S threshold passes in SC1, SC2 and SC3. Otherwise P1 remains the research replay default and every failed threshold is reported. SF75 is assessed against G1-G3 only and reported; it is not an adoption gate. P0 is reported for context with no gate.",
+  "wording_rules": "Simulated differences only. No claim of real waste reduction, lost-sales prevention, margin improvement or stockout probability. Recorded sales are not verified unconstrained demand; simulated unmet units are never observed lost sales.",
+  "change_control": "Frozen. Any change requires a new dated version recorded before any new run."
+}

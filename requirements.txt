@@ -1,0 +1,9 @@
+# Dynamic Pricing Engine V2 — project dependencies (Python 3.11)
+# Approved Step 3b, 2026-10-21. Core versions match the original perishable_project environment.
+pandas==2.3.3
+numpy==2.3.4
+scipy==1.16.2
+statsmodels==0.14.6
+scikit-learn==1.7.2
+matplotlib==3.10.7
+seaborn==0.13.2

@@ -1,0 +1,115 @@
+{
+  "evaluation_policy_id": "EP-PH2-A1-2026-10-24-v1",
+  "status": "FROZEN_BEFORE_COMPARISON",
+  "frozen_at": "2026-10-24",
+  "purpose": "Research evaluation of amendment A1 (7-day cooldown measured from the END of the previous markdown window) against the original Phase 2 rule and against unchanged prices. SIMULATED RESEARCH - NOT VALIDATED FOR LIVE USE. Passing is not commercial proof.",
+  "source": {
+    "document": "docs/PHASE_2_AMENDMENT_A1_COOLDOWN.md",
+    "document_sha256": "758fc6314c7492f146645bcba4b56ea85be437ff01e441df0261181b91e63fb0",
+    "approval": "A1 evaluation approved by the project owner on 2026-10-24",
+    "original_policy": {
+      "id": "EP-PH2-2026-10-23-v1",
+      "file": "config/evaluation/evaluation_policy_phase2_v1.json",
+      "sha256": "6fd4516739b301c29ca95dd42890b15cbb08b6d960842d2dcf6e2423c10b2f77"
+    },
+    "original_run": "20261023-233225_dynamic_pricing_evaluation",
+    "preliminary_exposure": "The original Phase 2 results were seen in full. The A1 impact analysis on the saved original run (26 SC3 selections in 19 lines would be blocked; SC1/SC2/SF75 unaffected) and a 5-line SC3 test replay were seen. No full A1 outcome had been simulated when this policy was frozen. The comparison is therefore exploratory."
+  },
+  "scope": {
+    "replay_assumption_set": {
+      "assumption_set_id": "AS-2026-10-23-v2",
+      "content_sha256": "ddc95ec125bb715ba63de9c2fe90de7319eb6cc38470c327c2585eb916cf989f",
+      "role": "replay values, identical to the protected comparison"
+    },
+    "pricing_assumption_set": {
+      "assumption_set_id": "AS-2026-10-23-v8",
+      "content_sha256": "7032e56f2a8b37fb39ea44e6f3dce154028e176cf0e31d67cfb4ac63bb811866",
+      "role": "A1 pricing belief, guards (cooldown from end of previous window) and conventions"
+    },
+    "protected_baseline_run": "20261023-131711_policy_comparison",
+    "ordering_policy": "P2",
+    "market_scenarios": [
+      "SC1",
+      "SC2",
+      "SC3",
+      "SF75"
+    ],
+    "adoption_scenarios": [
+      "SC1",
+      "SC2",
+      "SC3"
+    ],
+    "true_responses": [
+      "R0_NO_RESPONSE",
+      "R1_LOW",
+      "R2_CENTRAL",
+      "R3_HIGH"
+    ],
+    "series": "all 720",
+    "simulator_version": "1.4"
+  },
+  "original_criteria": {
+    "note": "Applied to A1 exactly as frozen in EP-PH2-2026-10-23-v1, unchanged",
+    "prerequisites_per_scenario": {
+      "E1": "Pricing off reproduces the protected P2 decisions, deliveries and weekly outputs exactly (CSV round trip)",
+      "E2": "Pricing on with fixed orders and no markdown possible reproduces the pricing-off decisions, deliveries, daily and weekly outputs exactly",
+      "E3": "In-loop eligibility, blockers, waste class, batch dates, investigate-by day and at-risk units equal the saved Markdown review for every decision"
+    },
+    "hard_gates_every_priced_run": {
+      "G1": "Unit conservation holds on every simulated day (replay.check_conservation)",
+      "G2": "Ordering unchanged: decisions and deliveries identical to the pricing-off pass",
+      "G3": "Markdown only and price bounds: price never above the reference price; markdowns are permitted steps, at most the maximum markdown, and keep the margin floor",
+      "G4": "Every selected markdown was eligible at its decision; at least 7 days between selections per line; at most 2 selections in any rolling 28 days; no overlapping windows; windows start on or after the decision day",
+      "G5": "Chronology: no demand read before its decision; markdown days only inside selected windows",
+      "G6": "Labels: every pricing record SIMULATED / HYPOTHETICAL_UNAPPROVED / NOT_EXECUTED with no approval or proposal id; every selection SIMULATED_AS_IF_APPROVED and PENDING_HUMAN_REVIEW",
+      "G7": "Belief and truth separated: under the no-response truth the daily demand equals the baseline demand on every day"
+    },
+    "measures": {
+      "delta": "priced minus baseline, summed over all series and simulated days of the scenario",
+      "gross_profit": "revenue at the price in force - assumed cost of units received - disposal cost (v6 disposal 0%); costs are identical in paired runs",
+      "baseline_expired_cost": "baseline expired units x assumed unit cost (reference price x (1 - assumed margin))",
+      "benefits": [
+        "gross-profit increase",
+        "fewer expired units"
+      ],
+      "harms": [
+        "gross-profit decrease",
+        "more illustrative unmet units",
+        "markdown events and mandatory reviews created",
+        "lines whose gross profit fell"
+      ]
+    },
+    "thresholds_per_adoption_scenario": {
+      "T1_R2_CENTRAL": "expired units fall (delta < 0) and gross profit does not fall (delta >= 0)",
+      "T2_R3_HIGH": "gross profit does not fall (delta >= 0)",
+      "T3_R1_LOW": "gross-profit loss at most 10% of the baseline expired cost (delta >= -0.10 x baseline_expired_cost)",
+      "T4_R0_NO_RESPONSE": "gross-profit loss at most 25% of the baseline expired cost (delta >= -0.25 x baseline_expired_cost)",
+      "T5_ALL_TRUE_RESPONSES": "illustrative unmet units rise by at most 0.5% of baseline sold units",
+      "not_applicable": "A threshold is NOT_APPLICABLE (neither pass nor fail) when no markdown was selected for that scenario and true response"
+    },
+    "outcome_rule": "MEETS_PREREGISTERED_RESEARCH_CRITERIA only if every prerequisite and hard gate passes in every scenario and every applicable threshold passes in SC1, SC2 and SC3; otherwise DOES_NOT_MEET_PREREGISTERED_RESEARCH_CRITERIA. SF75 is reported, not used. Either outcome is a research result only."
+  },
+  "a1_specific_criteria": {
+    "R0_original_reproduced": "The frozen v1.3 simulator with v7 re-run now reproduces the protected original run's pricing decisions exactly in every scenario and true response (so the comparison is against valid original results)",
+    "G8_a1_cooldown": "Every repeat markdown on a line starts at least 8 days after the previous window ended (7 complete days without a markdown)",
+    "comparison_measures": [
+      "gross-profit change vs unchanged prices",
+      "expired units",
+      "illustrative unmet units",
+      "markdown events",
+      "markdowns blocked by the cooldown",
+      "lines where gross profit rose / fell",
+      "mandatory reviews and review workload",
+      "safety-gate results"
+    ],
+    "preference_rule": {
+      "PA": "Every prerequisite, every original hard gate G1-G7, G8 and R0_original_reproduced pass",
+      "PB": "A1 meets the original thresholds T1-T5 (PASS or NOT_APPLICABLE) in SC1, SC2 and SC3",
+      "PC_harm_weak_response": "In each of SC1, SC2 and SC3, under R0 and under R1, A1's gross-profit change is at least the original's (A1 loses no more money when customers respond weakly or not at all)",
+      "PD_benefit_retention_central": "Summed over SC1-SC3 under R2, A1 keeps at least 75% of the original's gross-profit gain and at least 75% of the original's reduction in expired units",
+      "PE_unmet": "Summed over SC1-SC3, under every true response, A1's increase in illustrative unmet units is no larger than the original's",
+      "outcome": "A1_PREFERRED_RESEARCH_COOLDOWN only if PA, PB, PC, PD and PE all hold; otherwise ORIGINAL_RULE_RETAINED_AS_PREFERRED, with the failed parts listed. SF75 is reported, not used. Either outcome is a research result only."
+    }
+  },
+  "reporting": "Original and A1 results are reported side by side with the research run that supplies each. Thresholds and rules are not changed after results are seen."
+}

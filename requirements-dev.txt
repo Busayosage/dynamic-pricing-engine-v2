@@ -1,0 +1,4 @@
+# Development-only dependencies (testing and notebooks), Python 3.11
+pytest==8.4.2
+pytest-cov==7.1.0
+ipykernel==6.30.1

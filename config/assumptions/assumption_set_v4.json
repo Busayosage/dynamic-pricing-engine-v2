@@ -1,0 +1,1381 @@
+{
+  "schema_version": "4.0",
+  "assumption_set_id": "AS-2026-10-23-v4",
+  "version": 4,
+  "supersedes": {
+    "assumption_set_id": "AS-2026-10-23-v3",
+    "version": 3,
+    "content_sha256": "cb46de1bb2acfba85e8aa763138436a9bfb5cfd0b8d42820da5bebc2be4f63d9",
+    "file": "config/assumptions/assumption_set_v3.json",
+    "relationship": "v1-v3 are preserved unchanged (DRAFT); v4 adds markdown-review eligibility parameters only"
+  },
+  "approval": {
+    "status": "DRAFT",
+    "approved_by": null,
+    "approved_at": null,
+    "design_basis": "docs/STAGE_7A_PRICING_MARKDOWN_DESIGN.md (design approved with decisions M1-M9; file content awaiting review)",
+    "content_sha256": "bde13a20df120ea4e452bfb36f45ee6bb24581efa191216b403f46a2c076a1a5"
+  },
+  "production_use": false,
+  "currency": "GBP (assumed; the dataset does not state a currency)",
+  "time_granularity": "Weekly decisions at the start of Monday of the target week; daily simulation steps are SYNTHETIC",
+  "statements": {
+    "illustrative": "Every ASSUMED or SYNTHETIC value in this file is an illustrative demonstration default. None is supported by observed business data, and none may be presented as a verified business fact.",
+    "discount_uplift": "The +1.6% per discount point figure is a statistical association observed in apparently synthetic historical data. It is not a causal effect and not an elasticity. It must not be used to promise, forecast or report additional sales, revenue or margin. It is used only to check whether a markdown could plausibly reduce a projected surplus within the safety limits, and the result is always presented for human approval.",
+    "demand": "Recorded weekly sales are treated as illustrative demand; they are not verified unconstrained demand. Simulated unmet units are illustrative and are never observed lost sales.",
+    "uncertainty": "Planning weights interpolate between the forecast contract's p50 and p90. They are heuristics, not calibrated stockout probabilities; targets above 90% are unsupported and capped at p90 (extrapolation disabled).",
+    "fulfilment": "Expected fulfilment (planning_fill_rate_pct, 100%) is a planning assumption known at the decision. Realised receipts (delivery_fill_rate_pct, over_delivery_pct_short_life) are SYNTHETIC simulated outcomes applied only on the arrival day and are never read by planning.",
+    "status": "DRAFT: not approved, not validated against business data and not for production use. Every simulated order, delivery and outcome is hypothetical, unapproved and not executed.",
+    "information_boundary": "Parameters are configuration only: none is derived from sales, deliveries or outcomes after a decision date.",
+    "waste_risk": "Waste-risk classes describe SIMULATED stock projected against FORECAST demand under ASSUMED parameters. They are advisory, hypothetical and never a measurement of real waste. Recorded historical wastage is shown only as separate historical context.",
+    "markdown_review": "Markdown review eligibility only says whether a person should look at a line. It never proposes a discount size or a new price, never predicts sales, margin or waste effects, and never approves or executes anything. Eligibility rests on SIMULATED stock, FORECAST demand and ASSUMED rules."
+  },
+  "parameters": [
+    {
+      "key": "gross_margin_pct",
+      "value": {
+        "Bakery": 45,
+        "Beverages": 35,
+        "Meat": 30,
+        "Dairy": 28
+      },
+      "unit": "% of reference price",
+      "granularity": "per product category",
+      "scope": "category",
+      "provenance": "ASSUMED",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Illustrative grocery ranges; in-store bakery high, dairy low",
+      "allowed_range": {
+        "min": 0,
+        "max": 90
+      },
+      "sensitivity_range": {
+        "delta_points": [
+          -10,
+          10
+        ]
+      }
+    },
+    {
+      "key": "purchase_cost_rule",
+      "value": "reference_price_asof * (1 - gross_margin_pct / 100)",
+      "unit": "GBP per unit",
+      "granularity": "per store x product x origin",
+      "scope": "rule",
+      "provenance": "CALCULATED",
+      "evidence": "DERIVED_FROM_OBSERVED_PROXY_AND_ASSUMPTION",
+      "supported_by_observed_business_data": false,
+      "rationale": "No cost data; the reference price is itself an estimated proxy",
+      "allowed_range": {
+        "set": [
+          "reference_price_asof * (1 - gross_margin_pct / 100)"
+        ]
+      },
+      "sensitivity_range": {
+        "follows": "gross_margin_pct"
+      }
+    },
+    {
+      "key": "min_margin_pct",
+      "value": {
+        "Bakery": 10,
+        "Beverages": 10,
+        "Meat": 8,
+        "Dairy": 8
+      },
+      "unit": "% of discounted price",
+      "granularity": "per product category",
+      "scope": "category",
+      "provenance": "ASSUMED",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Margin protection floor after any discount",
+      "allowed_range": {
+        "min": 0,
+        "max": 89
+      },
+      "sensitivity_range": {
+        "values": [
+          5,
+          15
+        ]
+      }
+    },
+    {
+      "key": "max_discount_pct",
+      "value": 25,
+      "unit": "% off reference price",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "ASSUMED",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Hard cap equal to the largest historically recorded discount level (not a business policy)",
+      "allowed_range": {
+        "min": 0,
+        "max": 25
+      },
+      "sensitivity_range": {
+        "values": [
+          10,
+          25
+        ]
+      }
+    },
+    {
+      "key": "discount_steps_pct",
+      "value": [
+        5,
+        10,
+        15,
+        20,
+        25
+      ],
+      "unit": "% off reference price",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "ASSUMED",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Discrete steps equal to the recorded discount levels",
+      "allowed_range": {
+        "min": 0,
+        "max": 25
+      },
+      "sensitivity_range": {
+        "none": true
+      }
+    },
+    {
+      "key": "holding_cost_pct_per_week",
+      "value": {
+        "Bakery": 0.5,
+        "Beverages": 0.5,
+        "Meat": 0.75,
+        "Dairy": 0.75
+      },
+      "unit": "% of purchase cost per unit per week",
+      "granularity": "per product category",
+      "scope": "category",
+      "provenance": "ASSUMED",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "About 26-39% per year including capital and storage; chilled higher",
+      "allowed_range": {
+        "min": 0,
+        "max": 5
+      },
+      "sensitivity_range": {
+        "values": [
+          0.25,
+          1.5
+        ]
+      }
+    },
+    {
+      "key": "service_target_pct",
+      "value": {
+        "Bakery": 85,
+        "Meat": 88,
+        "Dairy": 92,
+        "Beverages": 95
+      },
+      "unit": "% business-intent label (not a probability)",
+      "granularity": "per product category",
+      "scope": "category",
+      "provenance": "ASSUMED",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Lower targets for short-life categories where expiry cost is high; values above 90 are unsupported and capped at p90",
+      "allowed_range": {
+        "min": 50,
+        "max": 99
+      },
+      "sensitivity_range": {
+        "values": [
+          50,
+          70,
+          90
+        ]
+      }
+    },
+    {
+      "key": "planning_weight_rule",
+      "value": "clip((service_target_pct - 50) / 40, 0, 1); weekly target = p50 + w * (p90 - p50)",
+      "unit": "dimensionless weight 0-1",
+      "granularity": "per product category",
+      "scope": "rule",
+      "provenance": "CALCULATED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Transparent linear approximation between contract quantiles; no distributional claim",
+      "allowed_range": {
+        "set": [
+          "clip((service_target_pct - 50) / 40, 0, 1); weekly target = p50 + w * (p90 - p50)"
+        ]
+      },
+      "sensitivity_range": {
+        "follows": "service_target_pct"
+      }
+    },
+    {
+      "key": "allow_extrapolation_above_p90",
+      "value": false,
+      "unit": "boolean",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "The data cannot support quantiles beyond p90; extrapolation disabled by decision",
+      "allowed_range": {
+        "set": [
+          false
+        ]
+      },
+      "sensitivity_range": {
+        "none": true
+      }
+    },
+    {
+      "key": "case_size_units",
+      "value": {
+        "Bakery": 12,
+        "Meat": 6,
+        "Dairy": 12,
+        "Beverages": 24
+      },
+      "unit": "units per case",
+      "granularity": "per product category",
+      "scope": "category",
+      "provenance": "ASSUMED",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Illustrative pack sizes",
+      "allowed_range": {
+        "min": 1,
+        "max": 1000,
+        "integer": true
+      },
+      "sensitivity_range": {
+        "multipliers": [
+          0.5,
+          2.0
+        ]
+      }
+    },
+    {
+      "key": "moq_cases_per_delivery",
+      "value": 2,
+      "unit": "cases per delivery line",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "ASSUMED",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Illustrative supplier minimum per delivery",
+      "allowed_range": {
+        "min": 1,
+        "max": 100,
+        "integer": true
+      },
+      "sensitivity_range": {
+        "values": [
+          1,
+          4
+        ]
+      }
+    },
+    {
+      "key": "transit_age_days",
+      "value": 1,
+      "unit": "days of shelf life used before arrival",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "ASSUMED",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Remaining life on arrival R = shelf_life_days - transit_age_days (minimum 1)",
+      "allowed_range": {
+        "min": 0,
+        "max": 2,
+        "integer": true
+      },
+      "sensitivity_range": {
+        "values": [
+          0,
+          2
+        ]
+      }
+    },
+    {
+      "key": "lead_time_days",
+      "value": "observed supplier_info.Lead_Time_Days",
+      "unit": "days from order placement to arrival",
+      "granularity": "per supplier",
+      "scope": "rule",
+      "provenance": "OBSERVED",
+      "evidence": "OBSERVED_DATA",
+      "supported_by_observed_business_data": true,
+      "rationale": "Recorded supplier lead times (1-3 days)",
+      "allowed_range": {
+        "set": [
+          "observed supplier_info.Lead_Time_Days"
+        ]
+      },
+      "sensitivity_range": {
+        "via": "lead_time_adjustment_days"
+      }
+    },
+    {
+      "key": "lead_time_adjustment_days",
+      "value": 0,
+      "unit": "days added to the observed lead time",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "SYNTHETIC",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Scenario stress setting",
+      "allowed_range": {
+        "min": 0,
+        "max": 2,
+        "integer": true
+      },
+      "sensitivity_range": {
+        "values": [
+          0,
+          2
+        ]
+      }
+    },
+    {
+      "key": "opening_cover_weeks",
+      "value": {
+        "Bakery": 0,
+        "Meat": 0,
+        "Dairy": 0.5,
+        "Beverages": 1.5
+      },
+      "unit": "weeks of the as-of 4-week average sales",
+      "granularity": "per product category (long-life only; short-life starts at 0)",
+      "scope": "category",
+      "provenance": "SYNTHETIC",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Starting stock for the replay; no stock data exist",
+      "allowed_range": {
+        "min": 0,
+        "max": 6
+      },
+      "sensitivity_range": {
+        "values": [
+          0.25,
+          3.0
+        ]
+      }
+    },
+    {
+      "key": "opening_cover_multiplier",
+      "value": 1.0,
+      "unit": "multiplier on opening_cover_weeks",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "SYNTHETIC",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Scenario stress setting for long-life opening stock",
+      "allowed_range": {
+        "min": 0,
+        "max": 5
+      },
+      "sensitivity_range": {
+        "values": [
+          0.3,
+          2.0
+        ]
+      }
+    },
+    {
+      "key": "delivery_fill_rate_pct",
+      "value": 100,
+      "unit": "% of ordered units actually received (REALISED simulated receipts; rounded down)",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "SYNTHETIC",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Simulated supplier performance applied on the arrival day only. Never read by planning: planning uses planning_fill_rate_pct (expected fulfilment)",
+      "allowed_range": {
+        "min": 0,
+        "max": 100
+      },
+      "sensitivity_range": {
+        "values": [
+          60,
+          100
+        ]
+      }
+    },
+    {
+      "key": "over_delivery_pct_short_life",
+      "value": 0,
+      "unit": "% extra units actually received on short-life drops (REALISED simulated; rounded down)",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "SYNTHETIC",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Scenario stress setting (supplier push or ordering error)",
+      "allowed_range": {
+        "min": 0,
+        "max": 50
+      },
+      "sensitivity_range": {
+        "values": [
+          0,
+          20
+        ]
+      }
+    },
+    {
+      "key": "demand_multiplier",
+      "value": 1.0,
+      "unit": "multiplier on recorded weekly sales (illustrative demand)",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "SYNTHETIC",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Scenario stress setting; forecasts are not told about it",
+      "allowed_range": {
+        "min": 0.5,
+        "max": 1.5
+      },
+      "sensitivity_range": {
+        "values": [
+          0.85,
+          1.15
+        ]
+      }
+    },
+    {
+      "key": "daily_demand_profile",
+      "value": [
+        0.14285714285714285,
+        0.14285714285714285,
+        0.14285714285714285,
+        0.14285714285714285,
+        0.14285714285714285,
+        0.14285714285714285,
+        0.14285714285714285
+      ],
+      "unit": "share of the week's units per day, Monday to Sunday",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "SYNTHETIC",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Uniform split; only weekly totals are observed",
+      "allowed_range": {
+        "sum": 1.0,
+        "min": 0,
+        "max": 1
+      },
+      "sensitivity_range": {
+        "alternative": [
+          0.12,
+          0.12,
+          0.13,
+          0.14,
+          0.16,
+          0.18,
+          0.15
+        ]
+      }
+    },
+    {
+      "key": "waste_band_pct",
+      "value": {
+        "LOW_below": 5,
+        "HIGH_above": 15
+      },
+      "unit": "% of the weekly p50 forecast",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "ASSUMED",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Weekly band thresholds; never a daily expiry prediction",
+      "allowed_range": {
+        "min": 0,
+        "max": 100,
+        "increasing": true
+      },
+      "sensitivity_range": {
+        "delta_points": [
+          -5,
+          5
+        ]
+      }
+    },
+    {
+      "key": "trend_divergence_threshold_pct",
+      "value": 30,
+      "unit": "% absolute difference between H4 and H1 point forecasts",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "ASSUMED",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Material trigger for an H4 trend check",
+      "allowed_range": {
+        "min": 5,
+        "max": 100
+      },
+      "sensitivity_range": {
+        "values": [
+          20,
+          50
+        ]
+      }
+    },
+    {
+      "key": "life_lead_time_tight_is_material_trigger",
+      "value": false,
+      "unit": "boolean",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Correction checkpoint 2026-10-23: lead time >= remaining life is an informational warning kept in the review evidence; it escalates only together with a material operational risk (it applied to 180 series in normal trading)",
+      "allowed_range": {
+        "set": [
+          true,
+          false
+        ]
+      },
+      "sensitivity_range": {
+        "values": [
+          true,
+          false
+        ]
+      }
+    },
+    {
+      "key": "discount_uplift_per_point_pct",
+      "value": 1.6,
+      "unit": "% units per discount point (log scale), assessed at 0.5x, 1.0x and 1.5x",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "ASSUMED",
+      "evidence": "NON_CAUSAL_ASSOCIATION_IN_APPARENTLY_SYNTHETIC_DATA",
+      "supported_by_observed_business_data": false,
+      "rationale": "See statements.discount_uplift; not used by the replay simulator",
+      "allowed_range": {
+        "min": 0,
+        "max": 5
+      },
+      "sensitivity_range": {
+        "multipliers": [
+          0.5,
+          1.5
+        ]
+      }
+    },
+    {
+      "key": "planning_fill_rate_pct",
+      "value": 100,
+      "unit": "% of ordered units EXPECTED to arrive, used for planning",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Decision D3: routine planning assumes 100% fulfilment and never inflates orders for expected short delivery. Fixed: any other value needs a new approved design",
+      "allowed_range": {
+        "set": [
+          100
+        ]
+      },
+      "sensitivity_range": {
+        "none": "fixed by decision D3"
+      },
+      "added_in_version": 2
+    },
+    {
+      "key": "stress_fill_rate_pct",
+      "value": 75,
+      "unit": "% of ordered units assumed to arrive in the illustrative fill-rate exposure",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "ASSUMED",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Decision D3: 75% illustrative stress for the reported exposure; orders are unchanged",
+      "allowed_range": {
+        "min": 50,
+        "max": 100
+      },
+      "sensitivity_range": {
+        "values": [
+          60,
+          90
+        ]
+      },
+      "added_in_version": 2
+    },
+    {
+      "key": "order_inflation_for_expected_shortfall",
+      "value": false,
+      "unit": "boolean",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Decision D3: orders are never automatically inflated for hypothetical short delivery",
+      "allowed_range": {
+        "set": [
+          false
+        ]
+      },
+      "sensitivity_range": {
+        "none": "fixed by decision D3"
+      },
+      "added_in_version": 2
+    },
+    {
+      "key": "pre_arrival_depletion_quantile",
+      "value": "p50",
+      "unit": "forecast quantile used to deplete existing stock before the new order arrives",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Decision D2: expected (p50) depletion before arrival; higher-demand exposure is assessed separately at p10/p50/p90",
+      "allowed_range": {
+        "set": [
+          "p50"
+        ]
+      },
+      "sensitivity_range": {
+        "none": "fixed by decision D2"
+      },
+      "added_in_version": 2
+    },
+    {
+      "key": "coverage_assessment_quantiles",
+      "value": [
+        "p10",
+        "p50",
+        "p90"
+      ],
+      "unit": "forecast quantiles for pre- and post-order coverage positions",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "5B-3a acceptance decision 1: conditional planning positions from the same p50-projected arrival state; not stockout probabilities",
+      "allowed_range": {
+        "set": [
+          [
+            "p10",
+            "p50",
+            "p90"
+          ]
+        ]
+      },
+      "sensitivity_range": {
+        "none": "fixed by 5B-3a decision 1"
+      },
+      "added_in_version": 2
+    },
+    {
+      "key": "expiry_escalation_pct_of_p50",
+      "value": 15,
+      "unit": "% of weekly p50: projected existing-stock expiry above this is a material risk",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "ASSUMED",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "5B-3c decision 2: provisional trigger (same level as the v1 high waste band); smaller positive expiry is a warning; zero or unavailable p50 makes any positive expiry material",
+      "allowed_range": {
+        "min": 0,
+        "max": 100
+      },
+      "sensitivity_range": {
+        "values": [
+          10,
+          25
+        ]
+      },
+      "added_in_version": 2
+    },
+    {
+      "key": "rounding_excess_warning_pct",
+      "value": 10,
+      "unit": "% of net need added by case/MOQ rounding above which a warning is shown",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "ASSUMED",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Readiness threshold T-X: reported, not a gate",
+      "allowed_range": {
+        "min": 0,
+        "max": 100
+      },
+      "sensitivity_range": {
+        "values": [
+          5,
+          20
+        ]
+      },
+      "added_in_version": 2
+    },
+    {
+      "key": "p0_history_weeks",
+      "value": 4,
+      "unit": "weeks of recorded sales (origin week and the 3 before) averaged by baseline P0",
+      "granularity": "global",
+      "scope": "policy P0",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Preregistered baseline definition (decision D11; P0 rule fixed by 5B-3d decision 1)",
+      "allowed_range": {
+        "set": [
+          4
+        ]
+      },
+      "sensitivity_range": {
+        "none": "preregistered; not varied"
+      },
+      "added_in_version": 2
+    },
+    {
+      "key": "p0_netting_rule",
+      "value": "STOCK_ON_HAND_ONLY_EXPIRY_BLIND",
+      "unit": "rule",
+      "granularity": "global",
+      "scope": "policy P0",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Preregistered: net all stock on hand, ignoring expiry and committed deliveries (5B-3d decision 1: not revised again)",
+      "allowed_range": {
+        "set": [
+          "STOCK_ON_HAND_ONLY_EXPIRY_BLIND"
+        ]
+      },
+      "sensitivity_range": {
+        "none": "preregistered; not varied"
+      },
+      "added_in_version": 2
+    },
+    {
+      "key": "missing_bounds_rule",
+      "value": {
+        "P0": "H1_ONLY_V11_GATE",
+        "P1": "H1_ONLY_V11_GATE",
+        "P2": "ANY_REQUIRED_HORIZON"
+      },
+      "unit": "policy-specific rule: which horizons must have bounds before an actionable order",
+      "granularity": "global",
+      "scope": "policy",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "5B-3d decision 2: P2 blocks when bounds are missing in either horizon; P1 keeps v1.1 behaviour (policy-specific safety difference); review cases use the any-horizon gate for every policy",
+      "allowed_range": {
+        "set": [
+          {
+            "P0": "H1_ONLY_V11_GATE",
+            "P1": "H1_ONLY_V11_GATE",
+            "P2": "ANY_REQUIRED_HORIZON"
+          }
+        ]
+      },
+      "sensitivity_range": {
+        "none": "fixed by 5B-3d decision 2"
+      },
+      "added_in_version": 2
+    },
+    {
+      "key": "standing_confirmation_rule",
+      "value": "ONE_CASE_PER_SERIES_WITH_ASSUMED_RECURRING_DAILY_OR_WEEKEND_DROPS",
+      "unit": "rule",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Decision D6: one standing supplier-confirmation case per series, separate from weekly review; an assumed weekend drop alone never creates weekly escalations",
+      "allowed_range": {
+        "set": [
+          "ONE_CASE_PER_SERIES_WITH_ASSUMED_RECURRING_DAILY_OR_WEEKEND_DROPS"
+        ]
+      },
+      "sensitivity_range": {
+        "none": "fixed by decision D6"
+      },
+      "added_in_version": 2
+    },
+    {
+      "key": "supply_capacity_used",
+      "value": false,
+      "unit": "boolean",
+      "granularity": "global",
+      "scope": "global",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Decision D8: supplier_info.Supply_Capacity is excluded until its unit and period are verified",
+      "allowed_range": {
+        "set": [
+          false
+        ]
+      },
+      "sensitivity_range": {
+        "none": "fixed by decision D8"
+      },
+      "added_in_version": 2
+    },
+    {
+      "key": "waste_risk_high_pct_of_p50",
+      "value": 25,
+      "unit": "% of typical weekly p50 demand (projected existing-stock expiry)",
+      "granularity": "global",
+      "scope": "waste-risk",
+      "provenance": "ASSUMED",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Stage 6A decision U1: a quarter of a typical week (about 1.75 days of sales) already on the shelf is expected to go out of date; illustrative, not calibrated against real waste",
+      "allowed_range": {
+        "min": 1,
+        "max": 100
+      },
+      "sensitivity_range": {
+        "values": [
+          20,
+          35
+        ]
+      },
+      "added_in_version": 3
+    },
+    {
+      "key": "waste_risk_moderate_pct_of_p50",
+      "value": 10,
+      "unit": "% of typical weekly p50 demand (projected existing-stock expiry)",
+      "granularity": "global",
+      "scope": "waste-risk",
+      "provenance": "ASSUMED",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Stage 6A decision U1: under a day of typical sales; below it the projection is within ordinary forecast noise (WAPE about 26%); illustrative",
+      "allowed_range": {
+        "min": 0,
+        "max": 100
+      },
+      "sensitivity_range": {
+        "values": [
+          5,
+          15
+        ]
+      },
+      "added_in_version": 3
+    },
+    {
+      "key": "waste_risk_zero_p50_rule",
+      "value": "POSITIVE_EXPIRY_HIGH_ELSE_INSUFFICIENT",
+      "unit": "rule for a typical-demand forecast of zero or below",
+      "granularity": "global",
+      "scope": "waste-risk",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "The share is undefined when p50 <= 0: any positive projected expiry is classified High (every unit is a large share of zero expected sales); no projected expiry is Insufficient information (risk cannot be judged), never Low",
+      "allowed_range": {
+        "set": [
+          "POSITIVE_EXPIRY_HIGH_ELSE_INSUFFICIENT"
+        ]
+      },
+      "sensitivity_range": {
+        "none": "fixed by stage 6B instruction"
+      },
+      "added_in_version": 3
+    },
+    {
+      "key": "waste_risk_classification_driver",
+      "value": "EXISTING_STOCK_EXPIRY_PROJECTION_ONLY",
+      "unit": "rule",
+      "granularity": "global",
+      "scope": "waste-risk",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Stage 6A decision U2: only the projected expiry of stock already on hand sets the class; the planned ordering buffer, low-sales exposure and recent simulated expiry are context only",
+      "allowed_range": {
+        "set": [
+          "EXISTING_STOCK_EXPIRY_PROJECTION_ONLY"
+        ]
+      },
+      "sensitivity_range": {
+        "none": "fixed by decision U2"
+      },
+      "added_in_version": 3
+    },
+    {
+      "key": "waste_risk_recorded_wastage_window_weeks",
+      "value": 4,
+      "unit": "recorded weeks (origin week and the 3 before) for historical wastage",
+      "granularity": "global",
+      "scope": "waste-risk",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Same as-of window as the P0 baseline; uses recorded weeks up to the decision only",
+      "allowed_range": {
+        "set": [
+          4
+        ]
+      },
+      "sensitivity_range": {
+        "none": "fixed; as-of window"
+      },
+      "added_in_version": 3
+    },
+    {
+      "key": "waste_risk_simulated_history_window_weeks",
+      "value": 4,
+      "unit": "previous simulated weeks for recent simulated expiry",
+      "granularity": "global",
+      "scope": "waste-risk",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Context only (decision U2); weeks simulated before the decision",
+      "allowed_range": {
+        "set": [
+          4
+        ]
+      },
+      "sensitivity_range": {
+        "none": "fixed; context only"
+      },
+      "added_in_version": 3
+    },
+    {
+      "key": "waste_risk_max_reasons",
+      "value": 3,
+      "unit": "reasons shown per row",
+      "granularity": "global",
+      "scope": "waste-risk",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Stage 6A manager-facing output",
+      "allowed_range": {
+        "min": 1,
+        "max": 5,
+        "integer": true
+      },
+      "sensitivity_range": {
+        "values": [
+          2,
+          4
+        ]
+      },
+      "added_in_version": 3
+    },
+    {
+      "key": "waste_risk_advisory_only",
+      "value": true,
+      "unit": "boolean",
+      "granularity": "global",
+      "scope": "waste-risk",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Stage 6A decision U4: findings link to existing review cases and never create review, approval or escalation records",
+      "allowed_range": {
+        "set": [
+          true
+        ]
+      },
+      "sensitivity_range": {
+        "none": "fixed by decision U4"
+      },
+      "added_in_version": 3
+    },
+    {
+      "key": "waste_risk_discounts_enabled",
+      "value": false,
+      "unit": "boolean",
+      "granularity": "global",
+      "scope": "waste-risk",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "No discount or pricing recommendations in Stage 6B",
+      "allowed_range": {
+        "set": [
+          false
+        ]
+      },
+      "sensitivity_range": {
+        "none": "fixed until a pricing stage is approved"
+      },
+      "added_in_version": 3
+    },
+    {
+      "key": "markdown_eligible_waste_categories",
+      "value": [
+        "HIGH",
+        "MODERATE"
+      ],
+      "unit": "waste-risk categories considered",
+      "granularity": "global",
+      "scope": "markdown-review",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Stage 7A section 4: only High or Moderate waste risk is considered for a markdown review",
+      "allowed_range": {
+        "set": [
+          [
+            "HIGH",
+            "MODERATE"
+          ]
+        ]
+      },
+      "sensitivity_range": {
+        "none": "fixed by decision M1"
+      },
+      "added_in_version": 4
+    },
+    {
+      "key": "markdown_min_sellable_days_after_investigate_by",
+      "value": 1,
+      "unit": "days between the investigate-by day and the oldest in-date batch's last sellable day",
+      "granularity": "global",
+      "scope": "markdown-review",
+      "provenance": "ASSUMED",
+      "evidence": "NONE_ILLUSTRATIVE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Decision M3: provisional one-sellable-day rule; fewer days means TOO_LATE_TO_ACT; illustrative",
+      "allowed_range": {
+        "min": 0,
+        "max": 7,
+        "integer": true
+      },
+      "sensitivity_range": {
+        "values": [
+          1,
+          2
+        ]
+      },
+      "added_in_version": 4
+    },
+    {
+      "key": "markdown_blocker_order",
+      "value": [
+        "CHRISTMAS_ESCALATION",
+        "SHORTAGE_BEFORE_DELIVERY",
+        "ALREADY_ON_PROMOTION",
+        "PRODUCT_EXCLUDED",
+        "TOO_LATE_TO_ACT"
+      ],
+      "unit": "documented blocker order",
+      "granularity": "global",
+      "scope": "markdown-review",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Decision M2: blockers reported in this order; every applicable blocker is retained",
+      "allowed_range": {
+        "set": [
+          [
+            "CHRISTMAS_ESCALATION",
+            "SHORTAGE_BEFORE_DELIVERY",
+            "ALREADY_ON_PROMOTION",
+            "PRODUCT_EXCLUDED",
+            "TOO_LATE_TO_ACT"
+          ]
+        ]
+      },
+      "sensitivity_range": {
+        "none": "fixed by decision M2"
+      },
+      "added_in_version": 4
+    },
+    {
+      "key": "markdown_product_exclusions",
+      "value": [],
+      "unit": "list of product IDs never considered for a markdown review",
+      "granularity": "global",
+      "scope": "markdown-review",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Decision M4: starts empty and visible; to be defined with the business",
+      "allowed_range": {
+        "set": [
+          []
+        ]
+      },
+      "sensitivity_range": {
+        "none": "defined later with the business"
+      },
+      "added_in_version": 4
+    },
+    {
+      "key": "markdown_open_inventory_case_effect",
+      "value": "WARNING_ONLY",
+      "unit": "rule",
+      "granularity": "global",
+      "scope": "markdown-review",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Decision M6: an open inventory review case is shown as a warning, never an automatic markdown blocker",
+      "allowed_range": {
+        "set": [
+          "WARNING_ONLY"
+        ]
+      },
+      "sensitivity_range": {
+        "none": "fixed by decision M6"
+      },
+      "added_in_version": 4
+    },
+    {
+      "key": "markdown_numerical_discounts_enabled",
+      "value": false,
+      "unit": "boolean",
+      "granularity": "global",
+      "scope": "markdown-review",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Decision M7: no numerical discount until verified cost, price, batch stock and response evidence exist",
+      "allowed_range": {
+        "set": [
+          false
+        ]
+      },
+      "sensitivity_range": {
+        "none": "fixed by decision M7"
+      },
+      "added_in_version": 4
+    },
+    {
+      "key": "markdown_approval_functionality_enabled",
+      "value": false,
+      "unit": "boolean",
+      "granularity": "global",
+      "scope": "markdown-review",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Decision M8: approval roles and audit requirements are documented only; no approval functionality",
+      "allowed_range": {
+        "set": [
+          false
+        ]
+      },
+      "sensitivity_range": {
+        "none": "fixed by decision M8"
+      },
+      "added_in_version": 4
+    },
+    {
+      "key": "markdown_required_data_before_numerical_discount",
+      "value": [
+        "D1_PURCHASE_COST",
+        "D2_SHELF_AND_REGULAR_PRICE",
+        "D3_BATCH_STOCK_AND_EXPIRY",
+        "D4_MARKDOWN_RESPONSE_HISTORY",
+        "D5_ALTERNATIVE_VALUES",
+        "D6_PRICING_RULES",
+        "D7_STORE_OPERATIONS",
+        "D8_APPROVAL_OWNERSHIP",
+        "D9_CONFIRMED_SUPPLIER_SCHEDULES"
+      ],
+      "unit": "data sets (Stage 7A section 5)",
+      "granularity": "global",
+      "scope": "markdown-review",
+      "provenance": "ASSUMED",
+      "evidence": "RULE",
+      "supported_by_observed_business_data": false,
+      "rationale": "Decision M7: minimum evidence before any numerical discount; currently missing or partial",
+      "allowed_range": {
+        "set": [
+          [
+            "D1_PURCHASE_COST",
+            "D2_SHELF_AND_REGULAR_PRICE",
+            "D3_BATCH_STOCK_AND_EXPIRY",
+            "D4_MARKDOWN_RESPONSE_HISTORY",
+            "D5_ALTERNATIVE_VALUES",
+            "D6_PRICING_RULES",
+            "D7_STORE_OPERATIONS",
+            "D8_APPROVAL_OWNERSHIP",
+            "D9_CONFIRMED_SUPPLIER_SCHEDULES"
+          ]
+        ]
+      },
+      "sensitivity_range": {
+        "none": "fixed by decision M7"
+      },
+      "added_in_version": 4
+    }
+  ],
+  "delivery_arrangements": {
+    "LONG_LIFE_WEEKLY": {
+      "applies_when": "remaining life R >= 7 days",
+      "orders_per_decision": 1,
+      "deliveries_per_order": 1,
+      "arrival": "day 1 + lead time of the target week",
+      "provenance": "ASSUMED"
+    },
+    "SHORT_LIFE_RECURRING_DROPS": {
+      "applies_when": "remaining life R < 7 days",
+      "orders_per_decision": 1,
+      "deliveries_per_order": "ceil(7 / R) scheduled drops, one every R days from day 1 + lead time, all inside the 7-day coverage window",
+      "requires": "an assumed standing recurring supplier arrangement (several drops per weekly order, including weekend days when R requires it)",
+      "provenance": "ASSUMED"
+    },
+    "UNSUPPORTED": {
+      "applies_when": "effective lead time >= 7 days, or remaining life < 1 day",
+      "action": "no simulated order; MANDATORY_REVIEW with reason UNSUPPORTED_DELIVERY_ARRANGEMENT"
+    }
+  },
+  "review_rules": {
+    "case_unit": "store x product x origin week (one case per decision point; reasons aggregated)",
+    "precedence": [
+      "MANDATORY_ESCALATION",
+      "MANDATORY_REVIEW",
+      "RISK_ESCALATION"
+    ],
+    "mandatory_escalation": [
+      "CHRISTMAS_PERIOD (any H1 or H4 target week 51 or 52)"
+    ],
+    "mandatory_review": [
+      "UNCERTAINTY_UNAVAILABLE",
+      "UNSUPPORTED_DELIVERY_ARRANGEMENT"
+    ],
+    "material_triggers": [
+      "PRE_ORDER_SHORTAGE",
+      "POST_ORDER_SHORTFALL",
+      "WASTE_HIGH_EXISTING_STOCK",
+      "FILL_RATE_SHORTFALL_LAST_WEEK",
+      "TREND_DIVERGENCE"
+    ],
+    "warnings": [
+      "LIFE_LEAD_TIME_TIGHT (escalates only together with a material trigger)",
+      "TARGET_ABOVE_P90_CAPPED",
+      "HOLIDAY_TARGET_WEEK"
+    ],
+    "coverage": "Pre-order coverage: usable stock plus deliveries committed before the decision, over the days before the new order can arrive (identifies shortage pressure). Post-order coverage: the same plus the proposed order on its scheduled arrival days, over the 7-day coverage window (shows whether the order addresses the pressure). Both are heuristic positions against forecast quantiles, not stockout probabilities.",
+    "approval": "No proposed action is approved or executed without an explicit approval event. Simulated orders and outcomes are hypothetical and unauthorised.",
+    "holiday": "HOLIDAY_TARGET_WEEK is a flag and a priority boost only; it never creates a case on its own",
+    "inventory_queue_v1_2": {
+      "applies_to": "policy P2 (P0 and P1 keep the v1.1 queue)",
+      "categories_in_precedence_order": [
+        "NO_ACTIONABLE_RECOMMENDATION_MANDATORY_REVIEW",
+        "SHORTAGE_REMAINING_AFTER_PROPOSED_ORDER",
+        "SHORTAGE_BEFORE_PROPOSED_DELIVERY",
+        "NO_REPLENISHMENT_REQUIRED",
+        "ROUTINE_REPLENISHMENT_PROPOSAL"
+      ],
+      "case_types": [
+        "MANDATORY_ESCALATION (Christmas, any horizon)",
+        "MANDATORY_REVIEW (no actionable recommendation)",
+        "RISK_ESCALATION (material reason)"
+      ],
+      "standing_cases": "one supplier-confirmation case per series with assumed recurring, daily or weekend drops",
+      "status": "every case PENDING_REVIEW; no approval events; Christmas never bulk-approvable"
+    }
+  },
+  "policies": {
+    "P0": {
+      "description": "Historical-sales baseline: average of the last 4 recorded weeks (origin week included), minus all stock on hand, ignoring expiry and committed deliveries",
+      "review_queue": "1.1"
+    },
+    "P1": {
+      "description": "Accepted simulator v1.1 sizing, reproduced exactly",
+      "review_queue": "1.1"
+    },
+    "P2": {
+      "description": "Time-phased, expiry-aware calculator with recommendation classification",
+      "review_queue": "1.2"
+    }
+  },
+  "scenarios": {
+    "SC1": {
+      "name": "Normal trading",
+      "overrides": {}
+    },
+    "SC2": {
+      "name": "Demand / supply pressure",
+      "overrides": {
+        "opening_cover_multiplier": 0.3,
+        "delivery_fill_rate_pct": 75,
+        "lead_time_adjustment_days": 1,
+        "demand_multiplier": 1.15
+      }
+    },
+    "SC3": {
+      "name": "Excess stock / expiry pressure",
+      "overrides": {
+        "opening_cover_multiplier": 2.0,
+        "over_delivery_pct_short_life": 20,
+        "demand_multiplier": 0.85
+      }
+    },
+    "SF75": {
+      "name": "Supplier-fill stress (75% realised receipts)",
+      "overrides": {
+        "delivery_fill_rate_pct": 75
+      },
+      "definition": "SC1 with only the REALISED simulated receipts reduced to 75% of ordered units (rounded down). Planning still expects 100% (planning_fill_rate_pct), orders are not inflated, and nothing else changes.",
+      "expected_fulfilment_pct": 100,
+      "realised_fulfilment_pct": 75,
+      "base_scenario": "SC1",
+      "adoption_threshold": null
+    }
+  },
+  "evaluation_record": {
+    "thresholds": "docs/STEP_5B3_IMPLEMENTATION_READINESS.md section 2 (preregistered; unchanged)",
+    "preliminary_exposure": "During stage 5B-3c integration (23 Oct 2026) SC1 aggregate totals for P0 (with an earlier netting rule, since corrected to the preregistered text) and P2 were seen once in a timing check. They were not used to change any rule, parameter or threshold. The P0/P1/P2 comparison is therefore exploratory rather than fully confirmatory.",
+    "comparison_status": "NOT_RUN",
+    "waste_risk": "No evaluation thresholds; advisory display only."
+  },
+  "approval_and_audit_requirements": {
+    "status": "DOCUMENTED ONLY — not implemented (decision M8)",
+    "states": [
+      "1 ELIGIBLE_FOR_INVESTIGATION (implemented)",
+      "2 DISCOUNT_PROPOSED (not built)",
+      "3 DISCOUNT_APPROVED (human approval event; not built)",
+      "4 DISCOUNT_EXECUTED (external confirmation; not built)"
+    ],
+    "future_roles": "named approver role per proposal (e.g. store manager, fresh-food lead); approval limits by role; second approver above a limit; never bulk or automatic approval, never for Christmas by default",
+    "future_audit_record": [
+      "proposal_id",
+      "inputs_with_evidence_labels",
+      "assumption_set_id_and_hash",
+      "system_version",
+      "approver",
+      "decision",
+      "reason",
+      "timestamps",
+      "execution_confirmation_reference"
+    ]
+  }
+}

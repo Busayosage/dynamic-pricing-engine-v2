@@ -1,0 +1,67 @@
+# Dynamic Pricing Engine V2 — reviewed for public GitHub publication (2026-10-24).
+
+# --- Credentials and secrets ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# --- Python environment and tooling caches ---
+.venv/
+venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# --- Local databases ---
+database/*.db
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+
+# --- Generated data and outputs ---
+outputs/runs/
+data/processed/
+
+# --- Data ---
+# Publish exactly the five original AMDARI training CSVs (already public in
+# Busayosage/predicting_demand_for_perishable_goods; identical files). Nothing else under data/raw/.
+data/raw/*
+!data/raw/weekly_sales.csv
+!data/raw/product_details.csv
+!data/raw/store_info.csv
+!data/raw/supplier_info.csv
+!data/raw/weather_data.csv
+# Derived reference files ship in the research release archive, not in Git.
+data/reference/
+
+# --- Internal, non-public documents ---
+docs/GITHUB_PUBLICATION_READINESS.md
+
+# --- Research release archives and restore scratch folders (published as GitHub Release assets) ---
+release/
+dpe-v2-*.zip
+dpe-v2-*.zip.sha256
+.restore-staging-*/
+
+# --- Legacy reference copies (contain local paths and saved notebook outputs) ---
+legacy/
+
+# --- Local tooling and environment-specific settings ---
+.claude/
+.vscode/
+.idea/
+*.code-workspace
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+*.tmp
